@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native';
+import Screen from '../components/Screen';
+import NormalText from '../components/NormalText';
 
 function DetailScreen() {
 	return (
-		<View>
-			<Text>Detail</Text>
-		</View>
+		<Screen>
+			<NormalText>Detail</NormalText>
+		</Screen>
 	)
 }
 

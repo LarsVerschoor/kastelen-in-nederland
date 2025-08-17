@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native';
+import Screen from '../components/Screen';
+import NormalText from '../components/NormalText';
 
 function MapScreen() {
 	return (
-		<View>
-			<Text>Kaart</Text>
-		</View>
+		<Screen>
+			<NormalText>Kaart</NormalText>
+		</Screen>
 	)
 }
 

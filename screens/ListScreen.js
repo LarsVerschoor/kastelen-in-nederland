@@ -1,10 +1,12 @@
-import { View, Text } from 'react-native';
+
+import Screen from '../components/Screen';
+import NormalText from '../components/NormalText';
 
 function ListScreen() {
 	return (
-		<View>
-			<Text>Kastelen</Text>
-		</View>
+		<Screen>
+			<NormalText>Kastelen</NormalText>
+		</Screen>
 	)
 }
 
