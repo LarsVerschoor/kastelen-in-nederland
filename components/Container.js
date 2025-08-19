@@ -15,8 +15,7 @@ function Container({ children }) {
 const styles = StyleSheet.create({
 	container: {
 		padding: 14,
-		borderRadius: 8,
-		gap: 8
+		borderRadius: 8
 	}
 });
 

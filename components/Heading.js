@@ -15,8 +15,8 @@ function Heading({ children }) {
 const styles = StyleSheet.create({
 	text: {
 		fontSize: 18,
-		fontWeight: 'bold',
-		paddingBottom: 10
+		// fontWeight: 'bold',
+		paddingBottom: 8
 	}
 });
 

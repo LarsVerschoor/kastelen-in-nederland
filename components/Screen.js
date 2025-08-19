@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 
-function Screen({ borderBottom = true, borderTop = true, scrollable = false, children }) {
+function Screen({ borderBottom = true, borderTop = true, scrollable = false, noPadding=false, children }) {
 	const { currentTheme } = useContext(ThemeContext);
 
 	const Container = scrollable ? ScrollView : View;
@@ -11,8 +11,8 @@ function Screen({ borderBottom = true, borderTop = true, scrollable = false, chi
 		<>
 			{ borderTop && <View style={[styles.headerBorder, currentTheme.styles.border]}/> }
 			<Container
-				style={[styles.screen, currentTheme.styles.bg, !scrollable && styles.padding]}
-				contentContainerStyle={styles.scrollContent}
+				style={[styles.screen, currentTheme.styles.bg, !scrollable && !noPadding && styles.padding]}
+				contentContainerStyle={[styles.scrollContent, !noPadding && styles.padding]}
 			>
 				{children}
 			</Container>
@@ -29,8 +29,7 @@ const styles = StyleSheet.create({
 		padding: 16
 	},
 	scrollContent: {
-		flexGrow: 1,
-		padding: 16
+		flexGrow: 1
 	},
 	headerBorder: {
 		borderTopWidth: 1,

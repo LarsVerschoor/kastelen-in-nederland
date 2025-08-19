@@ -14,12 +14,14 @@ function SettingsScreen() {
 		<>
 			<Screen borderBottom={false} scrollable={true}>
 				<Heading>Thema</Heading>
-				<Container style={styles.radioButtonsContainer}>
-					{
-						themes.map(t => (
-							<RadioButton onSelect={() => setTheme(t.id)} label={t.name} key={t.id} selected={t.id === currentTheme.id}/>
-						))
-					}
+				<Container>
+					<View style={styles.radioButtonsContainer}>
+						{
+							themes.map(t => (
+								<RadioButton onSelect={() => setTheme(t.id)} label={t.name} key={t.id} selected={t.id === currentTheme.id}/>
+							))
+						}
+					</View>
 				</Container>
 			</Screen>
 		</>
@@ -28,8 +30,7 @@ function SettingsScreen() {
 
 const styles = StyleSheet.create({
 	radioButtonsContainer: {
-		gap: 8,
-		backgroundColor: '#FF0000'
+		gap: 8
 	}
 });
 

@@ -4,6 +4,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { ThemeContext } from '../contexts/ThemeContext';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useContext } from 'react';
+import { CastlesProvider } from '../contexts/CastlesContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -11,34 +12,36 @@ function TabNavigator({ initialRouteName, screens }) {
 	const { currentTheme } = useContext(ThemeContext);
 
 	return (
-		<Tab.Navigator
-			id={null}
-			initialRouteName={initialRouteName}
-			screenOptions={{
-				tabBarStyle: currentTheme.styles.bgDark,
-				headerStyle: currentTheme.styles.bgDark,
-				headerTintColor: currentTheme.styles.text.color
-			}}
-		>
-			{
-				screens.map(screen => (
-					<Tab.Screen
-						name={screen.name}
-						component={screen.component}
-						options={{
-							title: screen.title,
-							headerRight: () => <SettingsButton/>,
-							tabBarButton: (props) => (
-								<Pressable { ...props } style={[props['aria-selected'] && currentTheme.styles.primary, styles.button]}>
-									<Ionicons name={screen.icon} size={24} color={props['aria-selected'] ? currentTheme.styles.bgLight.backgroundColor : currentTheme.styles.text.color} />
-								</Pressable>
-							)
-						}}
-						key={screen.name}
-					/>
-				))
-			}
-		</Tab.Navigator>
+		<CastlesProvider>
+			<Tab.Navigator
+				id={null}
+				initialRouteName={initialRouteName}
+				screenOptions={{
+					tabBarStyle: currentTheme.styles.bgDark,
+					headerStyle: currentTheme.styles.bgDark,
+					headerTintColor: currentTheme.styles.text.color
+				}}
+			>
+				{
+					screens.map(screen => (
+						<Tab.Screen
+							name={screen.name}
+							component={screen.component}
+							options={{
+								title: screen.title,
+								headerRight: () => <SettingsButton/>,
+								tabBarButton: (props) => (
+									<Pressable { ...props } style={[props['aria-selected'] && currentTheme.styles.primary, styles.button]}>
+										<Ionicons name={screen.icon} size={24} color={props['aria-selected'] ? currentTheme.styles.bgLight.backgroundColor : currentTheme.styles.text.color} />
+									</Pressable>
+								)
+							}}
+							key={screen.name}
+						/>
+					))
+				}
+			</Tab.Navigator>
+		</CastlesProvider>
 	);
 }
 
