@@ -5,21 +5,21 @@ import { FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import ListCard from '../components/ListCard';
 
 function ListScreen() {
-	const { castles } = useContext(CastlesContext);
+	const { castles, loading } = useContext(CastlesContext);
 
 	return (
 		<Screen noPadding={true}>
 			{
-				castles === null ?
+				loading ?
 					<ActivityIndicator size="large" style={styles.loading}/>
 					:
-					<FlatList
+					castles && <FlatList
 						contentContainerStyle={styles.list}
 						data={castles}
 						renderItem={({ item }) => (
 							<ListCard id={item.id}/>
 						)}
-						keyExtractor={item => item.id}
+						keyExtractor={({ id }) => id}
 					/>
 			}
 		</Screen>

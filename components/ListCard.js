@@ -7,12 +7,28 @@ import { Image, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ThemeContext } from '../contexts/ThemeContext';
 import BookmarkButton from './BookmarkButton';
+import NormalButton from './NormalButton';
+import { useNavigation } from '@react-navigation/native';
 
 function ListCard({ id }) {
 	const { castles } = useContext(CastlesContext);
 	const { currentTheme } = useContext(ThemeContext);
+	const navigation = useNavigation();
 
 	const castle = castles.find(c => c.id === id);
+
+	function goToMap() {
+		navigation.navigate('MapTab', {
+			screen: 'MapScreen',
+			params: {
+				region: {
+					...castle.location,
+					latitudeDelta: 0.04,
+					longitudeDelta: 0.04
+				}
+			}
+		});
+	}
 
 	return (
 		<Container>
@@ -34,6 +50,9 @@ function ListCard({ id }) {
 						uri: castle.image.url
 					}}
 				/>
+				<View style={styles.buttonsContainer}>
+					<NormalButton onPress={goToMap} icon="map-outline" text="Bekijk op kaart" inRow={true}/>
+				</View>
 			</View>
 		</Container>
 	);
@@ -56,7 +75,13 @@ const styles = StyleSheet.create({
 	image: {
 		flex: 1,
 		width: '100%',
-		aspectRatio: 16 / 9
+		aspectRatio: 16 / 9,
+		borderRadius: 6
+	},
+	buttonsContainer: {
+		flexDirection: 'row',
+		gap: 16,
+		flexWrap: 'wrap'
 	}
 });
 

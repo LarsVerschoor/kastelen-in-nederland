@@ -3,7 +3,7 @@ import MapScreen from '../screens/MapScreen';
 
 function MapStack() {
 	return (
-		<StackNavigator initialRouteName="MapScreen" screens={[{ name: 'MapScreen', component: MapScreen, headerShown: false }]}/>
+		<StackNavigator initialRouteName="MapScreen" screens={[{ name: 'MapScreen', title: 'Kaart', component: MapScreen }]}/>
 	);
 }
 

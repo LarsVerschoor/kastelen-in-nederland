@@ -18,7 +18,7 @@ const themes = [
 				color: '#E5EEFF'
 			},
 			textMuted: {
-				color: '#A4AEC2'
+				color: '#bbc6d8'
 			},
 			border: {
 				borderColor: '#404859',
@@ -46,7 +46,7 @@ const themes = [
 				color: '#00091A'
 			},
 			textMuted: {
-				color: '#3D475C'
+				color: '#343d4e'
 			},
 			border: {
 				borderColor: '#A6AEBF',

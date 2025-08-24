@@ -23,20 +23,20 @@ function TabNavigator({ initialRouteName, screens }) {
 				}}
 			>
 				{
-					screens.map(screen => (
+					screens.map(({name, component, title, icon}) => (
 						<Tab.Screen
-							name={screen.name}
-							component={screen.component}
+							name={name}
+							component={component}
 							options={{
-								title: screen.title,
-								headerRight: () => <SettingsButton/>,
+								title: title,
+								headerShown: false,
 								tabBarButton: (props) => (
 									<Pressable { ...props } style={[props['aria-selected'] && currentTheme.styles.primary, styles.button]}>
-										<Ionicons name={screen.icon} size={24} color={props['aria-selected'] ? currentTheme.styles.bgLight.backgroundColor : currentTheme.styles.text.color} />
+										<Ionicons name={icon} size={24} color={props['aria-selected'] ? currentTheme.styles.bgLight.backgroundColor : currentTheme.styles.text.color} />
 									</Pressable>
 								)
 							}}
-							key={screen.name}
+							key={name}
 						/>
 					))
 				}

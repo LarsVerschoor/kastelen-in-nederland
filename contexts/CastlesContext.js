@@ -6,6 +6,7 @@ const CastlesContext = createContext(null);
 function CastlesProvider({ children }) {
 	const [castles, setCastles] = useState(null);
 	const [bookmarks, setBookmarks] = useState(null);
+	const [notes, setNotes] = useState(null);
 	const [loading, setLoading] = useState(true);
 
 	// Load castles from API or AsyncStorage
@@ -53,11 +54,13 @@ function CastlesProvider({ children }) {
 		})();
 	}, [castles]);
 
-	// Load local bookmarks
+	// Load local bookmarks & notes
 	useEffect(() => {
 		(async () => {
 			try {
 				setBookmarks(JSON.parse(await AsyncStorage.getItem('bookmarks')) ?? []);
+				console.log(JSON.parse(await AsyncStorage.getItem('notes')) ?? [])
+				setNotes(JSON.parse(await AsyncStorage.getItem('notes')) ?? []);
 			} catch (e) {
 				console.log(e);
 			}
@@ -66,6 +69,7 @@ function CastlesProvider({ children }) {
 
 	// Locally save bookmarks on state update
 	useEffect(() => {
+		if (bookmarks === null) return;
 		(async () => {
 			try {
 				await AsyncStorage.setItem('bookmarks', JSON.stringify(bookmarks));
@@ -74,6 +78,19 @@ function CastlesProvider({ children }) {
 			}
 		})();
 	}, [bookmarks]);
+
+	// Locally save notes on state update
+	useEffect(() => {
+		if (notes === null) return;
+		(async () => {
+			try {
+				await AsyncStorage.setItem('notes', JSON.stringify(notes));
+				console.log(JSON.parse(await AsyncStorage.getItem('notes')) ?? [])
+			} catch (e) {
+				console.log(e);
+			}
+		})();
+	}, [notes]);
 
 	function toggleBookmark(id) {
 		setBookmarks((prev) => {
@@ -87,8 +104,27 @@ function CastlesProvider({ children }) {
 		return bookmarks.includes(id);
 	}
 
+	function addNote(id, text) {
+		if (!castles || !castles.find(castle => castle.id === id)) return;
+		setNotes((prev) => {
+			const filteredNotes = prev.filter(note => note.id !== id);
+			return [...filteredNotes, { id, text }];
+		});
+	}
+
+	function editNote(id, text) {
+		if (!castles || !castles.find(castle => castle.id === id)) return;
+		setNotes((prev) => prev.map(note => (
+			note.id !== id ? note : { ...note, text }
+		)));
+	}
+
+	function deleteNote(id) {
+		setNotes((prev) => prev.filter(note => note.id !== id));
+	}
+
 	return (
-		<CastlesContext.Provider value={{ castles, loading, isBookmarked, toggleBookmark }}>
+		<CastlesContext.Provider value={{ castles, loading, isBookmarked, toggleBookmark, addNote, editNote, deleteNote, notes }}>
 			{children}
 		</CastlesContext.Provider>
 	);

@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet } from 'react-native';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
+import SettingsButton from './SettingsButton';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,12 +18,16 @@ function StackNavigator({ initialRouteName, screens }) {
 			}}
 		>
 			{
-				screens.map(screen => (
+				screens.map(({ name, component, headerShown=true, settingsShown=true, title }) => (
 					<Stack.Screen
-						name={screen.name}
-						component={screen.component}
-						key={screen.name}
-						options={{ headerShown: screen.headerShown ?? false, title: screen.title }}
+						name={name}
+						component={component}
+						key={name}
+						options={{
+							headerShown: headerShown,
+							title: title,
+							headerRight: () => settingsShown && <SettingsButton/>
+						}}
 					/>
 				))
 			}
