@@ -59,7 +59,6 @@ function CastlesProvider({ children }) {
 		(async () => {
 			try {
 				setBookmarks(JSON.parse(await AsyncStorage.getItem('bookmarks')) ?? []);
-				console.log(JSON.parse(await AsyncStorage.getItem('notes')) ?? [])
 				setNotes(JSON.parse(await AsyncStorage.getItem('notes')) ?? []);
 			} catch (e) {
 				console.log(e);
@@ -85,7 +84,6 @@ function CastlesProvider({ children }) {
 		(async () => {
 			try {
 				await AsyncStorage.setItem('notes', JSON.stringify(notes));
-				console.log(JSON.parse(await AsyncStorage.getItem('notes')) ?? [])
 			} catch (e) {
 				console.log(e);
 			}
