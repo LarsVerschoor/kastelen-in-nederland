@@ -4,7 +4,7 @@ import Screen from '../components/Screen';
 import Heading from '../components/Heading';
 import { Picker } from '@react-native-picker/picker';
 import Container from '../components/Container';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput, Share } from 'react-native';
 import NormalButton from '../components/NormalButton';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
@@ -57,6 +57,13 @@ function CreateNoteScreen({ route }) {
 		});
 	}
 
+	async function share() {
+		const castle = castles.find(({ id }) => id === selectedCastle)
+		await Share.share({
+			message: `Ik wil mijn notities over ${castle.name} in ${castle.city} met je delen.\n\n${note}`
+		});
+	}
+
 	return (
 		<Screen>
 			<View style={styles.container}>
@@ -89,10 +96,13 @@ function CreateNoteScreen({ route }) {
 						/>
 				</View>
 				<View style={styles.buttonsContainer}>
-					<NormalButton onPress={save} icon="save-outline" text="Opslaan"></NormalButton>
+					<NormalButton onPress={save} icon="save-outline" text="Opslaan" inRow={true}></NormalButton>
 					{
 						editing &&
-						<NormalButton onPress={remove} icon="trash-outline" text="Verwijderen" secondary={true}/>
+						<>
+							<NormalButton onPress={remove} icon="trash-outline" text="Wissen" secondary={true} inRow={true}/>
+							<NormalButton onPress={share} icon="share-social-outline" text="delen" secondary={true} inRow={true}/>
+						</>
 					}
 				</View>
 
@@ -114,6 +124,7 @@ const styles = StyleSheet.create({
 	},
 	buttonsContainer: {
 		flexDirection: 'row',
+		flexWrap: 'wrap',
 		gap: 16
 	}
 });
